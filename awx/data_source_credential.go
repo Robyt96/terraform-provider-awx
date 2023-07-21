@@ -1,12 +1,11 @@
 /*
 Use this data source to query Credential by ID.
 
-Example Usage
+# Example Usage
 
 ```hcl
 *TBD*
 ```
-
 */
 package awx
 
@@ -14,9 +13,10 @@ import (
 	"context"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
+	"golang.org/x/exp/slices"
 )
 
 func dataSourceCredentialByID() *schema.Resource {
@@ -25,7 +25,7 @@ func dataSourceCredentialByID() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"id": {
 				Type:     schema.TypeInt,
-				Required: true,
+				Optional: true,
 			},
 			"tower_id": {
 				Type:     schema.TypeInt,
@@ -39,6 +39,10 @@ func dataSourceCredentialByID() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"name": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 		},
 	}
 }
@@ -47,20 +51,45 @@ func dataSourceCredentialByIDRead(ctx context.Context, d *schema.ResourceData, m
 	var diags diag.Diagnostics
 
 	client := m.(*awx.AWX)
-	id := d.Get("id").(int)
-	cred, err := client.CredentialsService.GetCredentialsByID(id, map[string]string{})
+	// id := d.Get("id").(int)
+	// cred, err := client.CredentialsService.GetCredentialsByID(id, map[string]string{})
+	// if err != nil {
+	// 	diags = append(diags, diag.Diagnostic{
+	// 		Severity: diag.Error,
+	// 		Summary:  "Unable to fetch credential",
+	// 		Detail:   "The given credential ID is invalid or malformed",
+	// 	})
+	// }
+
+	name := d.Get("name").(string)
+	creds, err := client.CredentialsService.ListCredentials(map[string]string{})
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Unable to fetch credential",
-			Detail:   "The given credential ID is invalid or malformed",
+			Summary:  "Unable to fetch credentials",
+			Detail:   "Unable to fetch credentials from AWX API",
 		})
+		return diags
 	}
+
+	idx := slices.IndexFunc(creds, func(c *awx.Credential) bool { return c.Name == name })
+
+	if idx < 0 {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Unable to find credentials",
+			Detail:   "Unable to find credentials with given name from AWX API",
+		})
+		return diags
+	}
+
+	cred := creds[idx]
 
 	d.Set("username", cred.Inputs["username"])
 	d.Set("kind", cred.Kind)
-	d.Set("tower_id", id)
-	d.SetId(strconv.Itoa(id))
+	d.Set("name", cred.Name)
+	d.Set("tower_id", cred.ID)
+	d.SetId(strconv.Itoa(cred.ID))
 	// d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags

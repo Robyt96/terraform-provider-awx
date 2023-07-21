@@ -1,12 +1,11 @@
 /*
 Use this data source to query Organizations.
 
-Example Usage
+# Example Usage
 
 ```hcl
 data "awx_organizations" "all_orgs" {}
 ```
-
 */
 package awx
 
@@ -15,9 +14,9 @@ import (
 	"strconv"
 	"time"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func dataSourceOrganizations() *schema.Resource {

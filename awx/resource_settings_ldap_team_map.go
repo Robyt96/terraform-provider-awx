@@ -1,26 +1,27 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-data "awx_organization" "default" {
-  name = "Default"
-}
 
-resource "awx_team" "admin_team" {
-  name = "Admins"
-  organization_id = data.awx_organization.default.id
-}
+	data "awx_organization" "default" {
+	  name = "Default"
+	}
 
-resource "awx_settings_ldap_team_map" "admin_team_map" {
-  name         = resource.awx_team.admin_team.name
-  users        = ["CN=MyTeam,OU=Groups,DC=example,DC=com"]
-  organization = data.awx_organization.default.name
-  remove       = true
-}
+	resource "awx_team" "admin_team" {
+	  name = "Admins"
+	  organization_id = data.awx_organization.default.id
+	}
+
+	resource "awx_settings_ldap_team_map" "admin_team_map" {
+	  name         = resource.awx_team.admin_team.name
+	  users        = ["CN=MyTeam,OU=Groups,DC=example,DC=com"]
+	  organization = data.awx_organization.default.name
+	  remove       = true
+	}
+
 ```
-
 */
 package awx
 
@@ -30,9 +31,9 @@ import (
 	"sync"
 	"time"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 var ldapTeamMapAccessMutex sync.Mutex

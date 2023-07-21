@@ -4,9 +4,9 @@ import (
 	"context"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func getResourceWorkflowJobTemplateNotificationTemplateAssociateFuncForType(client *awx.WorkflowJobTemplateNotificationTemplatesService, typ string) func(workflowJobTemplateID int, notificationTemplateID int) (*awx.NotificationTemplate, error) {

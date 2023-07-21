@@ -1,24 +1,26 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-data "awx_organization" "default" {
-  name = "Default"
-}
 
-resource "awx_inventory" "default" {
-  name            = "acc-test"
-  organization_id = data.awx_organization.default.id
-  variables       = <<YAML
+	data "awx_organization" "default" {
+	  name = "Default"
+	}
+
+	resource "awx_inventory" "default" {
+	  name            = "acc-test"
+	  organization_id = data.awx_organization.default.id
+	  variables       = <<YAML
+
 ---
 system_supporters:
   - pi
+
 YAML
 }
 ```
-
 */
 package awx
 
@@ -27,9 +29,9 @@ import (
 	"fmt"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func resourceInventory() *schema.Resource {

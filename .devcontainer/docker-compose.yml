@@ -6,7 +6,7 @@ services:
     volumes:
       - ../:/go/src/github.com/denouche/terraform-provider-awx
       # (only for debug)
-      #- ../../goawx:/go/src/github.com/denouche/goawx
+      #- ../../goawx:/go/src/github.com/robyt96/goawx
       - ~/.ssh:/home/vscode/.ssh:ro
       - ~/.ssh:/root/.ssh:ro
       - /var/run/docker.sock:/var/run/docker.sock

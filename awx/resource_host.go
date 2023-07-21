@@ -1,25 +1,26 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-resource "awx_host" "k3snode1" {
-  name         = "k3snode1"
-  description  = "pi node 1"
-  inventory_id = data.awx_inventory.default.id
-  group_ids = [
-    data.awx_inventory_group.default.id,
-    data.awx_inventory_group.pinodes.id,
-  ]
-  enabled   = true
-  variables = <<YAML
+
+	resource "awx_host" "k3snode1" {
+	  name         = "k3snode1"
+	  description  = "pi node 1"
+	  inventory_id = data.awx_inventory.default.id
+	  group_ids = [
+	    data.awx_inventory_group.default.id,
+	    data.awx_inventory_group.pinodes.id,
+	  ]
+	  enabled   = true
+	  variables = <<YAML
+
 ---
 ansible_host: 192.168.178.29
 YAML
 }
 ```
-
 */
 package awx
 
@@ -28,9 +29,9 @@ import (
 	"fmt"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func resourceHost() *schema.Resource {

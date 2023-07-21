@@ -2,7 +2,7 @@ dist/
 vendor/
 .idea/
 .DS_Store
-terraform-provider-awx
+terraform-provider-awx*
 bin
 
 # Local .terraform directories
@@ -39,3 +39,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 terraform
+
+# Debug
+__debug*

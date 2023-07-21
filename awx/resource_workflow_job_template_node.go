@@ -1,19 +1,19 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
 resource "random_uuid" "workflow_node_base_uuid" {}
 
-resource "awx_workflow_job_template_node" "default" {
-  workflow_job_template_id = awx_workflow_job_template.default.id
-  unified_job_template_id  = awx_job_template.baseconfig.id
-  inventory_id             = awx_inventory.default.id
-  identifier               = random_uuid.workflow_node_base_uuid.result
-}
-```
+	resource "awx_workflow_job_template_node" "default" {
+	  workflow_job_template_id = awx_workflow_job_template.default.id
+	  unified_job_template_id  = awx_job_template.baseconfig.id
+	  inventory_id             = awx_inventory.default.id
+	  identifier               = random_uuid.workflow_node_base_uuid.result
+	}
 
+```
 */
 package awx
 
@@ -23,9 +23,9 @@ import (
 	"log"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func resourceWorkflowJobTemplateNode() *schema.Resource {

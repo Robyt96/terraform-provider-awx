@@ -1,20 +1,21 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-resource "awx_workflow_job_template_schedule" "default" {
-  workflow_job_template_id      = awx_workflow_job_template.default.id
 
-  name                      = "schedule-test"
-  rrule                     = "DTSTART;TZID=Europe/Paris:20211214T120000 RRULE:INTERVAL=1;FREQ=DAILY"
-  extra_data                = <<EOL
+	resource "awx_workflow_job_template_schedule" "default" {
+	  workflow_job_template_id      = awx_workflow_job_template.default.id
+
+	  name                      = "schedule-test"
+	  rrule                     = "DTSTART;TZID=Europe/Paris:20211214T120000 RRULE:INTERVAL=1;FREQ=DAILY"
+	  extra_data                = <<EOL
+
 organization_name: testorg
 EOL
 }
 ```
-
 */
 package awx
 
@@ -24,9 +25,9 @@ import (
 	"log"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func resourceWorkflowJobTemplateSchedule() *schema.Resource {

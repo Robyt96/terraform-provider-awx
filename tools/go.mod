@@ -1,4 +1,4 @@
-module github.com/denouche/terraform-provider-awx/tools
+module github.com/robyt96/terraform-provider-awx/tools
 
 go 1.14
 
@@ -9,4 +9,4 @@ require (
 	github.com/nolte/plumbing v0.0.1
 )
 
-replace github.com/denouche/terraform-provider-awx => ../.
+replace github.com/robyt96/terraform-provider-awx => ../.

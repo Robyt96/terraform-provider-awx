@@ -1,14 +1,15 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-data "awx_team" "default" {
-  name = "Default"
-}
-```
 
+	data "awx_team" "default" {
+	  name = "Default"
+	}
+
+```
 */
 package awx
 
@@ -16,9 +17,9 @@ import (
 	"context"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func dataSourceTeam() *schema.Resource {

@@ -1,15 +1,16 @@
 /*
 *TBD*
 
-Example Usage
+# Example Usage
 
 ```hcl
-resource "awx_job_template_credential" "baseconfig" {
-  job_template_id = awx_job_template.baseconfig.id
-  credential_id   = awx_credential_machine.pi_connection.id
-}
-```
 
+	resource "awx_job_template_credential" "baseconfig" {
+	  job_template_id = awx_job_template.baseconfig.id
+	  credential_id   = awx_credential_machine.pi_connection.id
+	}
+
+```
 */
 package awx
 
@@ -18,9 +19,9 @@ import (
 	"fmt"
 	"strconv"
 
-	awx "github.com/denouche/goawx/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	awx "github.com/robyt96/goawx/client"
 )
 
 func resourceJobTemplateCredentials() *schema.Resource {
