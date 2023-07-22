@@ -104,10 +104,6 @@ func resourceInventorySource() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"source_project_id": {
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
 			"source_path": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -143,7 +139,6 @@ func resourceInventorySourceCreate(ctx context.Context, d *schema.ResourceData, 
 		"source_regions":   d.Get("source_regions").(string),
 		"instance_filters": d.Get("instance_filters").(string),
 		"group_by":         d.Get("group_by").(string),
-		"source_project":   d.Get("source_project_id").(int),
 		"source_path":      d.Get("source_path").(string),
 	}, map[string]string{})
 	if err != nil {
@@ -163,7 +158,7 @@ func resourceInventorySourceUpdate(ctx context.Context, d *schema.ResourceData, 
 		return diags
 	}
 
-	_, err := awxService.UpdateInventorySource(id, map[string]interface{}{
+	body := map[string]interface{}{
 		"name":                 d.Get("name").(string),
 		"description":          d.Get("description").(string),
 		"enabled_var":          d.Get("enabled_var").(string),
@@ -172,7 +167,6 @@ func resourceInventorySourceUpdate(ctx context.Context, d *schema.ResourceData, 
 		"overwrite_vars":       d.Get("overwrite_vars").(bool),
 		"update_on_launch":     d.Get("update_on_launch").(bool),
 		"inventory":            d.Get("inventory_id").(int),
-		"credential":           d.Get("credential_id").(int),
 		"source":               d.Get("source").(string),
 		"source_vars":          d.Get("source_vars").(string),
 		"host_filter":          d.Get("host_filter").(string),
@@ -183,9 +177,15 @@ func resourceInventorySourceUpdate(ctx context.Context, d *schema.ResourceData, 
 		"source_regions":   d.Get("source_regions").(string),
 		"instance_filters": d.Get("instance_filters").(string),
 		"group_by":         d.Get("group_by").(string),
-		"source_project":   d.Get("source_project_id").(int),
 		"source_path":      d.Get("source_path").(string),
-	}, nil)
+	}
+
+	cred_id := d.Get("credential_id").(int)
+	if cred_id > 0 {
+		body["credentials"] = d.Get("credential_id").(int)
+	}
+
+	_, err := awxService.UpdateInventorySource(id, body, nil)
 	if err != nil {
 		return buildDiagUpdateFail(diagElementInventorySourceTitle, id, err)
 	}
