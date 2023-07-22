@@ -5,11 +5,13 @@ go 1.20
 require (
 	github.com/gruntwork-io/terratest v0.31.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0
-	github.com/robyt96/goawx v1.0.1
+	github.com/robyt96/goawx v1.0.2
 	github.com/stretchr/testify v1.7.2
 	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1
 	gopkg.in/yaml.v2 v2.4.0
 )
+
+// replace github.com/robyt96/goawx v1.0.2 => "../goawx"
 
 require (
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect

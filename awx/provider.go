@@ -54,6 +54,7 @@ func Provider() *schema.Provider {
 			"awx_host":                                                resourceHost(),
 			"awx_inventory_group":                                     resourceInventoryGroup(),
 			"awx_inventory_source":                                    resourceInventorySource(),
+			"awx_inventory_source_schedule":                           resourceInventorySourceSchedule(),
 			"awx_inventory":                                           resourceInventory(),
 			"awx_job_template_credential":                             resourceJobTemplateCredentials(),
 			"awx_job_template":                                        resourceJobTemplate(),
