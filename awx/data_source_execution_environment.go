@@ -57,7 +57,6 @@ func dataSourceExecutionEnvironmentsRead(ctx context.Context, d *schema.Resource
 			"Get: Missing Parameters",
 			"Please use one of the selectors (name or group_id)",
 		)
-		return diags
 	}
 	executionEnvironments, _, err := client.ExecutionEnvironmentsService.ListExecutionEnvironments(params)
 	if err != nil {
@@ -73,7 +72,6 @@ func dataSourceExecutionEnvironmentsRead(ctx context.Context, d *schema.Resource
 			"The query returns more than one execution environment, %d",
 			len(executionEnvironments),
 		)
-		return diags
 	}
 
 	executionEnvironment := executionEnvironments[0]

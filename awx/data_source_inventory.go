@@ -66,7 +66,6 @@ func dataSourceInventoriesRead(ctx context.Context, d *schema.ResourceData, m in
 			"Get: Missing Parameters",
 			"Please use one of the selectors (name or group_id)",
 		)
-		return diags
 	}
 	inventories, _, err := client.InventoriesService.ListInventories(params)
 	if err != nil {
@@ -82,7 +81,6 @@ func dataSourceInventoriesRead(ctx context.Context, d *schema.ResourceData, m in
 			"The Query Returns more than one Group, %d",
 			len(inventories),
 		)
-		return diags
 	}
 
 	inventory := inventories[0]
