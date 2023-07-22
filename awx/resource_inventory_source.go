@@ -119,7 +119,7 @@ func resourceInventorySourceCreate(ctx context.Context, d *schema.ResourceData, 
 	client := m.(*awx.AWX)
 	awxService := client.InventorySourcesService
 
-	result, err := awxService.CreateInventorySource(map[string]interface{}{
+	body := map[string]interface{}{
 		"name":                 d.Get("name").(string),
 		"description":          d.Get("description").(string),
 		"enabled_var":          d.Get("enabled_var").(string),
@@ -128,7 +128,6 @@ func resourceInventorySourceCreate(ctx context.Context, d *schema.ResourceData, 
 		"overwrite_vars":       d.Get("overwrite_vars").(bool),
 		"update_on_launch":     d.Get("update_on_launch").(bool),
 		"inventory":            d.Get("inventory_id").(int),
-		"credential":           d.Get("credential_id").(int),
 		"source":               d.Get("source").(string),
 		"source_vars":          d.Get("source_vars").(string),
 		"host_filter":          d.Get("host_filter").(string),
@@ -140,7 +139,14 @@ func resourceInventorySourceCreate(ctx context.Context, d *schema.ResourceData, 
 		"instance_filters": d.Get("instance_filters").(string),
 		"group_by":         d.Get("group_by").(string),
 		"source_path":      d.Get("source_path").(string),
-	}, map[string]string{})
+	}
+
+	cred_id := d.Get("credential_id").(int)
+	if cred_id > 0 {
+		body["credentials"] = d.Get("credential_id").(int)
+	}
+
+	result, err := awxService.CreateInventorySource(body, map[string]string{})
 	if err != nil {
 		return buildDiagCreateFail(diagElementInventorySourceTitle, err)
 	}
