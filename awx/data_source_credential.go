@@ -19,13 +19,13 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-func dataSourceCredentialByID() *schema.Resource {
+func dataSourceCredentialByName() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourceCredentialByIDRead,
+		ReadContext: dataSourceCredentialByNameRead,
 		Schema: map[string]*schema.Schema{
 			"id": {
 				Type:     schema.TypeInt,
-				Optional: true,
+				Computed: true,
 			},
 			"tower_id": {
 				Type:     schema.TypeInt,
@@ -47,19 +47,10 @@ func dataSourceCredentialByID() *schema.Resource {
 	}
 }
 
-func dataSourceCredentialByIDRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceCredentialByNameRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	client := m.(*awx.AWX)
-	// id := d.Get("id").(int)
-	// cred, err := client.CredentialsService.GetCredentialsByID(id, map[string]string{})
-	// if err != nil {
-	// 	diags = append(diags, diag.Diagnostic{
-	// 		Severity: diag.Error,
-	// 		Summary:  "Unable to fetch credential",
-	// 		Detail:   "The given credential ID is invalid or malformed",
-	// 	})
-	// }
 
 	name := d.Get("name").(string)
 	creds, err := client.CredentialsService.ListCredentials(map[string]string{})
