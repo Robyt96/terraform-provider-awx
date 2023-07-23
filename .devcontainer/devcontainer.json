@@ -14,7 +14,7 @@
     ],
     "shutdownAction": "stopCompose",
     "postCreateCommand": "chmod -R 700 .git",
-    "workspaceFolder": "/go/src/github.com/denouche/terraform-provider-awx",
+    "workspaceFolder": "/go/src/github.com/robyt96/terraform-provider-awx",
     // "overrideCommand": "",
     "extensions": [
         // General backend
