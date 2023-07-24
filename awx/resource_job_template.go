@@ -203,6 +203,9 @@ func resourceJobTemplate() *schema.Resource {
 				Default:  "",
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 	}
 }
 
@@ -351,7 +354,7 @@ func setJobTemplateResourceData(d *schema.ResourceData, r *awx.JobTemplate) *sch
 	d.Set("force_handlers", r.ForceHandlers)
 	d.Set("forks", r.Forks)
 	d.Set("host_config_key", r.HostConfigKey)
-	d.Set("inventory_id", r.Inventory)
+	d.Set("inventory_id", strconv.Itoa(r.Inventory))
 	d.Set("job_tags", r.JobTags)
 	d.Set("job_type", r.JobType)
 	d.Set("diff_mode", r.DiffMode)
